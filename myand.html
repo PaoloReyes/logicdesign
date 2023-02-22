@@ -122,6 +122,7 @@
         A, B : INPUT;
         C    : OUTPUT;
 )
+
 BEGIN
     C = A & B; 
 END;</code></pre>
@@ -149,10 +150,10 @@ END Logic;</code></pre>
                                     <div class="code-block">
                                         <pre><code class="language-VHDL">module MyAND (A, B, C);
 
-input A, B;
-output C;
+    input A, B;
+    output C;
 
-assign C = A & B;
+    assign C = A & B;
 
 endmodule</code></pre>
                                     </div><!--//code-block-->
