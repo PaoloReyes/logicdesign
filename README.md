@@ -1,2 +1,3 @@
-# logicdesign
-A web page for teaching HDL's
+# Logic Design
+
+A simple Web Page for uploading logic design content to help my classmates learn better.
