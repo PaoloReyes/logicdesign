@@ -1,1 +1,297 @@
-Working ON...
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Sumador de 8 Bits</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">  
+    <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
+      
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+
+    <style>
+        .section-block p{
+            text-align: justify;
+        }
+        .section-block h6{
+            text-align: center;
+        }
+        .simplelightbox-gallery-1 div:first-child{
+            margin: auto;
+        }
+        .simplelightbox-gallery-1 h6::after{
+            content: "";
+            display: block;
+            padding-top: 10px;
+        }   
+        .section-block .section-block{
+            padding-top: 0px;
+        }
+    </style>
+    
+</head> 
+
+<body class="body-green">
+    <div class="page-wrapper">
+        <!-- ******Header****** -->
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="index.html">
+                            <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                            <span class="text-highlight">Guía de Dis</span><span class="text-bold">eño Lógico</span>
+                        </a>
+                    </h1>
+                    
+                </div><!--//branding-->
+                
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                    <li class="breadcrumb-item active">Sumador de 8 Bits</li>
+                </ol>
+                
+            </div><!--//container-->
+        </header><!--//header-->
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-bolt"></i> Sumador de 8 Bits</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Última modificación: 22 de febrero del 2023</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="problema" class="doc-section">
+                                <h2 class="section-title">Problema</h2>
+                                <div class="section-block">
+                                    <p>Una de las primeras ideas al trabajar con circuitos lógicos es fabricar nuestro propio sumador. En teoría es una tarea muy sencilla, simplemente escribimos nuestras entradas y salidas en una tabla de verdad y buscamos una expresión lógica que haga que se cumplan todas las condiciones. Con este enfoque se podrían crear sumadores de N bits pero implicaría tener que hacer la sintetización de una nueva tabla de verdad por cada bit que añadamos, por ello podemos intentar hacer un sumador de un solo bit y buscar la forma de reutilizarlo para sumar N bits.</p>
+                                    <p>En la siguiente imagen se puede apreciar la tabla de verdad de un sumador de 1 bit cuyas entradas son X e Y y tiene como salidas el resultado de la suma y el bit de acarreo de salida.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorTT.JPG" ><img class="img-fluid" src="images/SumadorTT.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 1. Tabla de verdad de sumador de 1 bit</h6>
+                                        </div>
+                                    </div>
+                                    <p>Podríamos usar álgebra booleana o mapas de Karnaugh para encontrar un circuito que satisfaga esta tabla, pero de manera intuitiva podemos ver que el resultado de 'S' es el XOR de X e Y y el resultado de acarreo es el AND de X e Y, por lo tanto podemos implementar este circuito usando solo esas dos compuertas, a este sumador de dos cantidades de 1 bit se le conoce como "Half Adder".</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorEsquematico.JPG" ><img class="img-fluid" src="images/SumadorEsquematico.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 2. Esquemático de un Half Adder</h6>
+                                        </div>
+                                    </div>
+                                    <p>Si queremos reutilizar este circuito para hacer una suma de más bits no sería posible porque no tendríamos forma de conocer el acarreo producido por el módulo anterior, para lograr este cometido tendríamos que agregar un bit más que tenga un acarreo de entrada y de esta forma podríamos conectar el acarreo de salida de un sumador al acarreo de entrada del siguiente, a este sumador de tres cantidades de 1 bit se le conoce como "Full Adder".</p>
+                                    <p>Podemos comenzar analizando la tabla de verdad de este nuevo circuito.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/Sumador3TT.JPG" ><img class="img-fluid" src="images/Sumador3TT.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 3. Tabla de verdad de un Full Adder</h6>
+                                        </div>
+                                    </div>
+                                    <p>De manera intuitiva podemos notar que 'S' tiene la misma tabla de verdad que un XOR de 3 entradas por lo que podemos obtener su valor de esa forma, pero para el acarreo de salida tendremos que encontrar la expresión usando álgebra booleana. Si obetenemos una SOP (Suma de Productos) en base a esta tabla llegamos a la siguiente expresión:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorEq1.JPG" ><img class="img-fluid" src="images/SumadorEq1.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 4. Ecuación Canónica Full Adder</h6>
+                                        </div>
+                                    </div>
+                                    <p>Podemos minimizar la expresión hasta llegar a:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorEq2.JPG" ><img class="img-fluid" src="images/SumadorEq2.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 5. Ecuación Minimizada SOP Full Adder</h6>
+                                        </div>
+                                    </div>
+                                    <p>La implementación de este circuito es la siguiente:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/FA.JPG" ><img class="img-fluid" src="images/FA.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 6. Esquemático de Full Adder</h6>
+                                        </div>
+                                    </div>
+                                    <p>Con el Full Adder construido podemos hacer un sumador de 8 bits conectando cada uno de los bits de entrada de los buses X e Y a un Full Adder independiente y concatenar los acarreos de salida del Full Adder previo al Full Adder actual. A este método se le conoce como "Ripple Carry Adder".</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/RippleCarryAdder.JPG" ><img class="img-fluid" src="images/RippleCarryAdder.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 7. Ripple Carry Adder Sumando 128 y 40</h6>
+                                        </div>
+                                    </div>
+                                    <p>Si bien ya podríamos intentar describir este circuito con un HDL no sería lo más eficiente ya que el Ripple Carry Adder tiene un gran inconveniente, mientras más Full Adders se agregan más tiempo tarda en dar una respuesta, ya que el segundo Full Adder debe esperar a que se genere el acarreo de salida del primer Full Adder para poder calcular su respuesta, a su vez el tercer Full Adder debe esperar a que el segundo Full Adder calcule el acarreo de salida para entonces dar su respuesta final y como pudimos observar en la figura 6 el acarreo de salida debe pasar a través de dos niveles de compuertas (AND-OR) lo que significa que el tiempo que tarda en dar una respuesta es el tiempo de propagación de dos compuertas lógicas, para el segundo Full Adder debido a que debemos esperar al primero tardaría 4 tiempos de propagación y así sucesivamente, entonces para nuestro octavo Full Adder el tiempo de espera para obtener una respuesta sólida es de 16 tiempos de propagación por ello no es conveniente usar un Ripple Carry Adder para valores grandes.</p>
+                                    <p>La alternativa es usar un Carry-LookAhead Adder, la idea es que podamos determinar de una forma más rápida si el acarreo de salida será 0 o 1 y con ello eliminar los retrasos por tiempo de propagacipón de sumadores de varios bits.</p>
+                                    <p>Si partimos de la ecuación booleana que simplificamos en la figura 5 podemos factorizar el acarreo de entrada y obtener la siguiente expresión:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorEq3.JPG" ><img class="img-fluid" src="images/SumadorEq3.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 8. Ecuación Booleana Factorizada</h6>
+                                        </div>
+                                    </div>
+                                    <p>En esta nueva expresión equivalente vemos que tenemos separados dos términos, como ambos se unen por un OR significa que con que al menos uno sea verdadero vamos a obtener un acarreo de salida, el primer término "XY" quiere decir que si X e Y son verdaderos se asegura un acarreo de salida ya que la suma daría 2 que en binario es 10 y el bit más significativo representa el acarreo, por otro lado en el segundo término "X+Y" quiere decir que si almenos una de las dos entradas X o Y es verdadera vamos a obtener en el acarreo de salida el mismo valor que tiene el acarreo de entrada.</p>
+                                    <p>Para este punto puede parecer que solo se reorganizó la ecuación original, pero hacer esto nos da grandes libertades, por ejemplo, podemos llamar al término "XY" como G_i y al término "X+Y" como P_i y renombrar a los acarreos como C_i+1 para el acarreo de salida y C_i para el acarreo de entrada. De esa forma podemos calcular el acarreo siguiente con una sintaxis más simple.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorEq4.JPG" ><img class="img-fluid" src="images/SumadorEq4.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 9. Ecuación Booleana Simple</h6>
+                                        </div>
+                                    </div>
+                                    <p>Siguiendo esta misma lógica podemos calcular el acarreo en dos instantes posteriores metiendo expresiones dentro de expresiones como se aprecia en la siguiente imagen:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/SumadorEq5.JPG" ><img class="img-fluid" src="images/SumadorEq5.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 10. Ecuación Booleana Cíclica 1</h6>
+                                        </div>
+                                    </div>
+                                    <p>Bajo esta misma idea podemos obtener las expresiones para todos los acarreos posteriores usando un número constante de compuertas. Como una forma de entender a que me refiero, asi se vería un sumador de 2 bits usando este método y las expresiones que ya calculamos.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/Carry-LookAhead2.JPG" ><img class="img-fluid" src="images/Carry-LookAhead2.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 11. Carry-LookAhead de 2 Bits Sumando 2 y 3</h6>
+                                        </div>
+                                    </div>
+                                    <p>Finalmente así se vería el Carry-LookAhead de 8 bits.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/Carry-LookAhead8.JPG" ><img class="img-fluid" src="images/Carry-LookAhead8.JPG"/></a>
+                                            </div> 
+                                            <h6>Fig 11. Carry-LookAhead de 8 Bits</h6>
+                                        </div>
+                                    </div>
+                                    <p>Es fácil darnos cuenta que este circuito adquiere demasiada complejidad muy rapidamente y esto solo con 8 bits, si intentaramos crear sumadores más convencionales de 32 o incluso 64 bits el número de compuertas necesarias se dispararía, por ello hoy en día nadie se procupa por alambrar estos circuitos ya que con la llegada de los HDL's podemos hacer el proceso de sintetización y alambrado de este circuito que a mi me tomó más de 5 horas en tan solo 5 minutos.</p>
+                                    <p>Antes de pasar a los ejemplos en HDL's quiero recalcar que al diseñar un circuito sumador podemos optar por usar menos compuertas con un Ripple Carry Adder o buscar eficiencia y velocidad a coste de un incremento de hardware con un Carry-LookAhead Adder. Ninguna de estas es la mejor opción y debemos siempre implementar la que más nos convenga para cada aplicación.</p>
+                                </div>
+                            </section><!--//doc-section-->
+                            <section id="descripcion-del-circuito" class="doc-section">
+                                <h2 class="section-title">Descripción del Circuito</h2>
+                                <div id="ahdl"  class="section-block">
+                                    <h3 class="block-title">AHDL</h3>
+                                    <p>Implementación de compuerta Sumador con operadores aritméticos en AHDL.</p>
+                                    <div class="section-block">
+                                        <div class="code-block">
+                                            <pre><code class="language-AHDL">SUBDESIGN Adder8 (
+    A[7..0], B[7..0] : INPUT;
+    Z[8..0]          : OUTPUT;
+)
+
+BEGIN
+    Z[] = (0, A[])+(0, B[]);
+END;</code></pre>
+                                        </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="vhdl"  class="section-block">
+                                    <h3 class="block-title">VHDL</h3>
+                                    <p>Implementación de compuerta Sumador con operadores aritméticos en VHDL.</p>
+                                    <div class="section-block">
+                                        <div class="code-block">
+                                            <pre><code class="language-VHDL">LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_unsigned.all;
+
+ENTITY Adder8 IS 
+    PORT(A, B : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+         Z    : OUT STD_LOGIC_VECTOR(8 DOWNTO 0));
+END Adder8;
+
+ARCHITECTURE Sumador OF Adder8 IS
+BEGIN
+    Z <= ('0'&A)+('0'&B);
+END Sumador;</code></pre>
+                                        </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="verilog"  class="section-block">
+                                    <h3 class="block-title">Verilog</h3>
+                                    <p>Implementación de compuerta Sumador con operadores aritméticos en Verilog.</p>
+                                    <div class="code-block">
+                                        <pre><code class="language-VHDL">module Adder8(A, B, Z);
+    input [7:0] A, B;
+    output [8:0] Z;
+        
+    assign Z = A+B;
+        
+endmodule</code></pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->                         
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+	                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+		                            <li class="nav-item">
+	                                    <a class="nav-link scrollto" href="#problema">Problema</a>
+		                            </li>
+		                            <li class="nav-item">
+	                                    <a class="nav-link scrollto" href="#descripcion-del-circuito">Descripción del Circuito</a>
+		                            </li>
+                                    <nav class="nav doc-sub-menu nav flex-column">
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#ahdl">AHDL</a>
+	                                    </li>
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#vhdl">VHDL</a>
+	                                    </li>
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#verilog">Verilog</a>
+	                                    </li>            
+                        </div>
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+        
+    </div><!--//page-wrapper-->
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Hecho con <span class="sr-only">amor</span><i class="fas fa-heart"></i> por <a href="https://paoloreyes.github.io/web/" target="_blank">Paolo Reyes</a> para robotistas</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <!-- Main Javascript -->          
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/prism/prism.js"></script>      
+    <script src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>      
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script> 
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>                                                          
+    <script src="assets/js/main.js"></script>
+    
+</body>
+</html> 
+
