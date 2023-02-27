@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Detector de Primos</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">  
+    <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
+      
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+
+    <style>
+        .section-block p{
+            text-align: justify;
+        }
+        .section-block h6{
+            text-align: center;
+        }
+        .simplelightbox-gallery-1 div:first-child{
+            margin: auto;
+        }
+        .simplelightbox-gallery-1 h6::after{
+            content: "";
+            display: block;
+            padding-top: 10px;
+        }   
+        .section-block .section-block{
+            padding-top: 0px;
+        }
+    </style>
+    
+</head> 
+
+<body class="body-green">
+    <div class="page-wrapper">
+        <!-- ******Header****** -->
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="./index">
+                            <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                            <span class="text-highlight">Guía de Dis</span><span class="text-bold">eño Lógico</span>
+                        </a>
+                    </h1>
+                    
+                </div><!--//branding-->
+                
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="./index">Inicio</a></li>
+                    <li class="breadcrumb-item active">Detector de Primos</li>
+                </ol>
+                
+            </div><!--//container-->
+        </header><!--//header-->
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-bolt"></i> Detector de Primos</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Última modificación: 24 de febrero del 2023</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="problema" class="doc-section">
+                                <h2 class="section-title">Problema</h2>
+                                <div class="section-block">
+                                    <p>Debemos encontrar dada una entrada de 4 bits si un número es primo o no proporcionando una única salida que valga 1 si el número es primo o 0 en el caso contrario.</p>
+                                    <p>Resolver este problema es mucho más sencillo que el sumador realizado en el capítulo pasado, ya que ya sabemos lo fácil que puede ser integrar circuitos complejos simplemente describiendo como queremos que funcione en un HDL. Pero por última vez antes de llegar al código me gustaría explicar la expresión booleana que le daría solución en sus 8 diferentes formas de representación y a su vez ver como los mapas de Karnaugh dan soluciones simplificadas sin mucho esfuerzo.</p>
+                                    <p>Podemos comenzar dibujando la tabla de verdad del circuito que deseamos.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/TTPrimos.JPG" ><img class="img-fluid" src="images/TTPrimos.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 1. Tabla de Verdad de un Detector de Números Primos</h6>
+                                        </div>
+                                    </div>
+                                    <p>Con esto hecho podemos determinar la expresión canónica de la suma de productos de esta tabla incluyendo todos los términos donde la salida sea igual a 1.</p> 
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/PrimosSOP.JPG" ><img class="img-fluid" src="images/PrimosSOP.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 2. Ecuación Canónica de Suma de Productos</h6>
+                                        </div>
+                                    </div>
+                                    <p>Es obvio que esta expresión se puede simplificar y entonces nos quedamos con:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/PrimosSOPS.JPG" ><img class="img-fluid" src="images/PrimosSOPS.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 3. Ecuación Simplificada de Suma de Productos</h6>
+                                        </div>
+                                    </div>
+                                    <p>En el esquemático de este circuito nos damos cuenta que se compone de una primer estapa de AND's y una segunda de OR's, a esta simplificación se le llama "AND-OR" y es solo una de las 8 diferentes formas de representar una misma ecuación lógica con dos etapas de compuertas.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/ANDOR.JPG" ><img class="img-fluid" src="images/ANDOR.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 4. Esquemático AND-OR</h6>
+                                        </div>
+                                    </div>
+                                    <p>Podemos encontrar otra forma de representar esta expresión si la negamos dos veces ya que como sabemos negar dos veces una expresión booleana nos da la expresión booleana original.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/ANDORN.JPG" ><img class="img-fluid" src="images/ANDORN.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 5. Ecuación doblemente negada</h6>
+                                        </div>
+                                    </div>
+                                    <p>Aplicando la ley de De Morgan podemos obtener una equivalencia usando solo compuertas NAND, a esta forma de simplificar expresiones se le llama "NAND-NAND".</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/NANDNAND.JPG" ><img class="img-fluid" src="images/NANDNAND.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 6. Ecuación NAND-NAND</h6>
+                                        </div>
+                                    </div>
+                                    <p>Esta expresión se puede visualizar en el siguiente circuito.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/NANDNANDE.JPG" ><img class="img-fluid" src="images/NANDNANDE.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 7. Esquemático NAND-NAND</h6>
+                                        </div>
+                                    </div>
+                                    <p>Si volvemos a aplicar la ley de De Morgan a cada término llegamos a la siguiente expresión, a esta se le conoce como "OR-NAND".</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/ORNANDEQ.JPG" ><img class="img-fluid" src="images/ORNANDEQ.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 8. Ecuación OR-NAND</h6>
+                                        </div>
+                                    </div>
+                                    <p>Su esquemático se vería como sigue:</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/ORNAND.JPG" ><img class="img-fluid" src="images/ORNAND.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 9. Esquemático OR-NAND</h6>
+                                        </div>
+                                    </div>
+                                    <p>Si repetimos el proceso una vez más llegamos a la expresión "NOR-OR" y al esquemático de la figura 11.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/NOROREQ.JPG" ><img class="img-fluid" src="images/NOROREQ.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 10. Ecuación NOR-OR</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/NOROR.JPG" ><img class="img-fluid" src="images/NOROR.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 11. Esquemático NOR-OR</h6>
+                                        </div>
+                                    </div>
+                                    <p>Si volvemos a aplicar la ley de De Morgan volvemos a la expresión original, de esa forma a partir de una suma de productos (AND OR) podemos obtener tres diferentes formas más.</p>
+                                    <p>Podemos hacer lo mismo partiendo de un producto de sumas que se consigue regresando a la tabla de verdad y generar términos en base a los resultados que son iguales a 0, la expresión que nos queda se le conoce como "OR AND" y su esquemático se puede ver en la figura 13.</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/ORANDEQ.JPG" ><img class="img-fluid" src="images/ORANDEQ.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 12. Ecuación Simplificada OR-AND</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <a href="images/ORAND.JPG" ><img class="img-fluid" src="images/ORAND.JPG" /></a>
+                                            </div> 
+                                            <h6>Fig 13. Esquemático OR-AND</h6>
+                                        </div>
+                                    </div>
+                                    <!--<a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/prettydocs-free-bootstrap-theme-for-developers-and-startups/" class="btn btn-green" target="_blank"><i class="fas fa-download"></i> Download PrettyDocs</a>-->
+                                </div>
+                            </section><!--//doc-section-->
+                            <section id="descripcion-del-circuito" class="doc-section">
+                                <h2 class="section-title">Descripción del Circuito</h2>
+                                <div id="ahdl"  class="section-block">
+                                    <h3 class="block-title">AHDL</h3>
+                                    <p>Implementación de compuerta AND en AHDL.</p>
+                                    <div class="section-block">
+                                        <div class="code-block">
+                                            <pre><code class="language-AHDL">SUBDESIGN MyAND (
+        A, B : INPUT;
+        C    : OUTPUT;
+)
+
+BEGIN
+    C = A & B; 
+END;</code></pre>
+                                        </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="vhdl"  class="section-block">
+                                    <h3 class="block-title">VHDL</h3>
+                                    <p>Implementación de compuerta AND en VHDL.</p>
+                                    <div class="section-block">
+                                        <div class="code-block">
+                                            <pre><code class="language-VHDL">ENTITY MyAND IS
+    PORT (A, B : IN BIT;
+          C    : OUT BIT);
+END MyAND;
+
+ARCHITECTURE Logic OF MyAND IS
+BEGIN
+    C <= A AND B;
+END Logic;</code></pre>
+                                        </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="verilog"  class="section-block">
+                                    <h3 class="block-title">Verilog</h3>
+                                    <p>Implementación de compuerta AND en Verilog.</p>
+                                    <div class="code-block">
+                                        <pre><code class="language-VHDL">module MyAND (A, B, C);
+    input A, B;
+    output C;
+
+    assign C = A & B;
+endmodule</code></pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->                         
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+	                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+		                            <li class="nav-item">
+	                                    <a class="nav-link scrollto" href="#problema">Problema</a>
+		                            </li>
+		                            <li class="nav-item">
+	                                    <a class="nav-link scrollto" href="#descripcion-del-circuito">Descripción del Circuito</a>
+		                            </li>
+                                    <nav class="nav doc-sub-menu nav flex-column">
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#ahdl">AHDL</a>
+	                                    </li>
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#vhdl">VHDL</a>
+	                                    </li>
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#verilog">Verilog</a>
+	                                    </li>            
+                        </div>
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+        
+    </div><!--//page-wrapper-->
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Hecho con <span class="sr-only">amor</span><i class="fas fa-heart"></i> por <a href="https://paoloreyes.github.io/web/" target="_blank">Paolo Reyes</a> para robotistas</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <!-- Main Javascript -->          
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/prism/prism.js"></script>      
+    <script src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>      
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script> 
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>                                                          
+    <script src="assets/js/main.js"></script>
+    
+</body>
+</html> 
+
