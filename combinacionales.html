@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Circuitos Combinacionales</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Paolo Reyes">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">  
+    <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
+      
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    
+</head> 
+
+<body class="body-green">
+    <div class="page-wrapper">
+        <!-- ******Header****** -->
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="./index">
+                            <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                            <span class="text-highlight">Guía de Dis</span><span class="text-bold">eño Lógico</span>
+                        </a>
+                    </h1>
+                    
+                </div><!--//branding-->
+                
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="./index">Inicio</a></li>
+                    <li class="breadcrumb-item active">Circuitos Combinacionales</li>
+                </ol>
+                
+            </div><!--//container-->
+        </header><!--//header-->
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-bolt"></i> Circuitos Combinacionales</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Última modificación: 5 de marzo del 2023</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row">
+                    <div class="doc-content col-md-12 col-12 order-1">
+                        <div class="content-inner">
+                            <section class="cards-section text-center">
+                                <div id="cards-wrapper" class="cards-wrapper row">
+                                    <div class="item item-green col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-arrow-trend-down"></i>
+                                            </div><!--//icon-holder-->
+                                            <h3 class="title">Multiplexor</h3>
+                                            <p class="intro">Selector de entradas basado en bus binario</p>
+                                            <a class="link" href="combinacionales/mux"><span></span></a>
+                                        </div><!--//item-inner-->
+                                    </div><!--//item-->
+                                    <div class="item item-pink item-2 col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-share-nodes"></i>
+                                            </div><!--//icon-holder-->
+                                            <h3 class="title">Demultiplexor</h3>
+                                            <p class="intro">Selector de salidas basado en bus binario</p>
+                                            <a class="link" href="combinacionales/demux"><span></span></a>
+                                        </div><!--//item-inner-->
+                                    </div><!--//item-->
+                                    <div class="item item-blue col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-laptop-code"></i>
+                                            </div>
+                                            <h3 class="title">Codificador</h3>
+                                            <p class="intro">Traducción de lineas directas (One Hot) a binario</p>
+                                            <a class="link" href="combinacionales/encoder"><span></span></a>
+                                        </div><!--//item-inner-->
+                                    </div><!--//item-->
+                                    <div class="item item-purple col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-code"></i>
+                                            </div>
+                                            <h3 class="title">Codificador con Prioridad</h3>
+                                            <p class="intro">Traducción de lineas directas (One Hot) a binario con importancia por MSB</p>
+                                            <a class="link" href="combinacionales/priority-encoder"><span></span></a>
+                                        </div>
+                                    </div>
+                                    <div class="item item-primary col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-barcode"></i>
+                                            </div>
+                                            <h3 class="title">Decodificador</h3>
+                                            <p class="intro">Traductor de binario a lineas directas (One Hot)</p>
+                                            <a class="link" href="combinacionales/decoder.html"><span></span></a>
+                                        </div>
+                                    </div>
+                                    <div class="item item-orange col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-not-equal"></i>
+                                            </div>
+                                            <h3 class="title">Comparador</h3>
+                                            <p class="intro">Comparador aritmético de dos números binarios</p>
+                                            <a class="link" href="combinacionales/comparador.html"><span></span></a>
+                                        </div>
+                                    </div>
+                                    <div class="item item-green col-lg-4 col-6">
+                                        <div class="item-inner">
+                                            <div class="icon-holder">
+                                                <i class="icon fa fa-microchip"></i>
+                                            </div><!--//icon-holder-->
+                                            <h3 class="title">ALU</h3>
+                                            <p class="intro">Unidad Aritmética Lógica con 15 operaciones</p>
+                                            <a class="link" href="combinacionales/alu.html"><span></span></a>
+                                        </div><!--//item-inner-->
+                                    </div><!--//item-->
+                                </div>
+                            </section><!--//doc-section-->    
+                        </div>             
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+        
+    </div><!--//page-wrapper-->
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Hecho con <span class="sr-only">amor</span><i class="fas fa-heart"></i> por <a href="https://paoloreyes.github.io/web/" target="_blank">Paolo Reyes</a> para robotistas</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <!-- Main Javascript -->          
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/prism/prism.js"></script>      
+    <script src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>      
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script> 
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>                                                          
+    <script src="assets/js/main.js"></script>
+    
+</body>
+</html> 
