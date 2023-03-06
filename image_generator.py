@@ -159,3 +159,49 @@ class Codificador(Scene):
             else:
                 self.play(Write(outs[idx][0]), Write(ins[idx]))
             self.wait()
+
+class Decodificador(Scene):
+    def construct(self):
+        self.camera.background_color = "#353537"
+        decodificador = VGroup(Tex("DECODIFICADOR", color=RED, fill_opacity=0.3).scale(0.4), Rectangle(color=RED).rotate(PI/2))
+        inputs = VGroup()
+        for line in range(8):
+            inputs.add(Line(LEFT, RIGHT))
+        inputs.arrange_submobjects(DOWN, buff=0.5).next_to(decodificador, RIGHT).shift(0.25*LEFT)
+        outputs = VGroup()
+        for line in range(3):
+            outputs.add(Line(LEFT, RIGHT))
+        outputs.arrange_submobjects(DOWN, buff=0.5).next_to(decodificador, LEFT).shift(0.25*RIGHT)
+        decodificador.z_index = 100
+        self.add(decodificador, inputs, outputs)
+    
+        ins = []
+        outs = []
+        for idx, line in enumerate(inputs):
+            if idx < 2:
+                outs.append(MathTex("00"+bin(idx)[2:] ).next_to(outputs[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            elif idx < 4:
+                outs.append(MathTex("0"+bin(idx)[2:] ).next_to(outputs[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            else:
+                outs.append(MathTex(bin(idx)[2:] ).next_to(outputs[0], LEFT).scale(0.9).shift(0.2*LEFT))
+
+            outs[idx][0][0].next_to(outputs[0], LEFT).scale(0.7).shift(-0.1*LEFT)
+            outs[idx][0][1].next_to(outputs[1], LEFT).scale(0.7).shift(-0.1*LEFT)
+            outs[idx][0][2].next_to(outputs[2], LEFT).scale(0.7).shift(-0.1*LEFT)
+
+            ins.append(MathTex("0","0","0","0","0","0","0","0"))
+            string = ""
+            for i in range(8):
+                if i == idx:
+                    string+="1"
+                else:
+                    string+="0"
+            onehot = VGroup()
+            for letter in string:
+                onehot.add(MathTex(letter).scale(0.9))
+            ins[idx] = onehot.arrange_submobjects(UP, buff=0.4).next_to(inputs, RIGHT).scale(0.7).shift(-0.15*RIGHT)
+            if idx:
+                self.play(ReplacementTransform(outs[idx-1], outs[idx]), ReplacementTransform(ins[idx-1], ins[idx]))
+            else:
+                self.play(Write(outs[idx][0]), Write(ins[idx]))
+            self.wait()

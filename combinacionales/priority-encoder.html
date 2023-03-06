@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Codificador con Prioridad</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Paolo Reyes">    
+    <link rel="shortcut icon" href="../favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="../assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="../assets/plugins/prism/prism.css">
+    <link rel="stylesheet" href="../assets/plugins/elegant_font/css/style.css">  
+    <link rel="stylesheet" href="../assets/plugins/simplelightbox/simple-lightbox.min.css">
+      
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="../assets/css/styles.css">
+
+    <style>
+        .section-block p{
+            text-align: justify;
+        }
+        .section-block h6{
+            text-align: center;
+        }
+        .simplelightbox-gallery-1 div:first-child{
+            margin: auto;
+        }
+        .simplelightbox-gallery-1 h6::after{
+            content: "";
+            display: block;
+            padding-top: 10px;
+        }   
+        .section-block .section-block{
+            padding-top: 0px;
+        }
+    </style>
+    
+</head> 
+
+<body class="body-purple">
+    <div class="page-wrapper">
+        <!-- ******Header****** -->
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="./index">
+                            <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                            <span class="text-highlight">Guía de Dis</span><span class="text-bold">eño Lógico</span>
+                        </a>
+                    </h1>
+                    
+                </div><!--//branding-->
+                
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../index">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="../combinacionales">Circuitos Combinacionales</a></li>
+                    <li class="breadcrumb-item active">Codificador con Prioridad</li>
+                </ol>
+                
+            </div><!--//container-->
+        </header><!--//header-->
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-code"></i> Codificador con Prioridad</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Última modificación: 6 de marzo del 2023</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="problema" class="doc-section">
+                                <h2 class="section-title">Problema</h2>
+                                <div class="section-block">
+                                    <p>Queremos diseñar un circuito combinacional que tenga la siguiente funcion: recibir una entrada (One Hot) de 2^n bits y dar una salida de n bits cuyo valor binario corresponda al índice de la única línea encendida en la entrada, en el caso de que hayan más de 1 línea encendida a la vez se tomará la línea cuyo bit sea más significativo, a este circuito se le conoce como codificador con prioridad, se clasifican por su número de entradas y salidas, por ejemplo el codificador con prioridad de la figura 1 es un codificador con prioridad 8 a 3 donde el primer dígito representa el número de entradas y el segundo el número de salidas, el número de salidas siempre va a ser log_2(ENTRADAS).</p>
+                                    <div class="row simplelightbox-gallery-1">
+                                        <div class="col-md-9 col-sm-12 col-sm-12">
+                                            <div class="screenshot-holder">
+                                                <video width="100%" autoplay muted loop playsinline>
+                                                    <source src="../images/CodificadorPrioridad.mp4" type="video/mp4">
+                                                </video>
+                                            </div> 
+                                            <h6>Fig 1. Funcionamiento de un Codificador con Prioridad</h6>
+                                        </div>
+                                    </div>
+                                    <p>Para crear este circuito podemos hacerlo mediante mapas de Karnaugh o tablas de verdad y de esa forma encontraríamos la ecuación lógica que lo describe, pero ya que sabemos que hoy en día podemos hacer uso de herramientas CAD para facilitar este proceso, procederé a mostrar directamente su implementación en los HDL's.</p> 
+                                    <!---->
+                                </div>
+                            </section><!--//doc-section-->
+                            <section id="descripcion-del-circuito" class="doc-section">
+                                <h2 class="section-title">Descripción del Circuito</h2>
+                                <div id="ahdl"  class="section-block">
+                                    <h3 class="block-title">AHDL</h3>
+                                    <p>Implementación de un Codificador con Prioridad 8 a 3 en AHDL.</p>
+                                    <div class="section-block">
+                                        <div class="code-block">
+                                            <pre><code class="language-AHDL">SUBDESIGN PRIORITY_ENCODER(
+    a[7..0] : INPUT;
+    z[2..0] : OUTPUT;
+)
+
+BEGIN
+    CASE a[] IS
+        WHEN b"00000001" => z[] = 0;
+        WHEN b"0000001X" => z[] = 1;
+        WHEN b"000001XX" => z[] = 2;
+        WHEN b"00001XXX" => z[] = 3;
+        WHEN b"0001XXXX" => z[] = 4;
+        WHEN b"001XXXXX" => z[] = 5;
+        WHEN b"01XXXXXX" => z[] = 6;
+        WHEN b"1XXXXXXX" => z[] = 7;
+    END CASE;
+END;</code></pre>
+                                        </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="vhdl"  class="section-block">
+                                    <h3 class="block-title">VHDL</h3>
+                                    <p>Implementación de un Codificador con Prioridad 8 a 3 en VHDL.</p>
+                                    <div class="section-block">
+                                        <div class="code-block">
+                                            <pre><code class="language-VHDL">ENTITY PRIORITY_ENCODER IS
+    PORT(a : IN BIT_VECTOR(7 DOWNTO 0);
+         z : OUT BIT_VECTOR(2 DOWNTO 0));
+END PRIORITY_ENCODER;
+
+ARCHITECTURE Behaviour OF PRIORITY_ENCODER IS
+BEGIN
+    z <= "111" WHEN a(7) = '1' ELSE
+         "110" WHEN a(6) = '1' ELSE
+         "101" WHEN a(5) = '1' ELSE
+         "100" WHEN a(4) = '1' ELSE
+         "011" WHEN a(3) = '1' ELSE
+         "010" WHEN a(2) = '1' ELSE
+         "001" WHEN a(1) = '1' ELSE
+         "000";
+END Behaviour;</code></pre>
+                                        </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <div id="verilog"  class="section-block">
+                                    <h3 class="block-title">Verilog</h3>
+                                    <p>Implementación de un Codificador con Prioridad 8 a 3 en Verilog.</p>
+                                    <div class="code-block">
+                                        <pre><code class="language-VHDL">module PRIORITY_ENCODER(a, z);
+input [7:0] a;
+output reg [2:0] z;
+
+always @(a)
+begin
+    casex(a)
+        8'b00000001 : z = 3'b000;
+        8'b0000001X : z = 3'b001;
+        8'b000001XX : z = 3'b010;
+        8'b00001XXX : z = 3'b011;
+        8'b0001XXXX : z = 3'b100;
+        8'b001XXXXX : z = 3'b101;
+        8'b01XXXXXX : z = 3'b110;
+        8'b1XXXXXXX : z = 3'b111;
+        8'b00000000 : z = 3'b000;
+    endcase
+end
+endmodule</code></pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->                         
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+	                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+		                            <li class="nav-item">
+	                                    <a class="nav-link scrollto" href="#problema">Problema</a>
+		                            </li>
+		                            <li class="nav-item">
+	                                    <a class="nav-link scrollto" href="#descripcion-del-circuito">Descripción del Circuito</a>
+		                            </li>
+                                    <nav class="nav doc-sub-menu nav flex-column">
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#ahdl">AHDL</a>
+	                                    </li>
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#vhdl">VHDL</a>
+	                                    </li>
+	                                    <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#verilog">Verilog</a>
+	                                    </li>            
+                        </div>
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+        
+    </div><!--//page-wrapper-->
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Hecho con <span class="sr-only">amor</span><i class="fas fa-heart"></i> por <a href="https://paoloreyes.github.io/web/" target="_blank">Paolo Reyes</a> para robotistas</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <!-- Main Javascript -->          
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/plugins/prism/prism.js"></script>      
+    <script src="../assets/plugins/stickyfill/dist/stickyfill.min.js"></script>      
+    <script src="../assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script> 
+    <script src="../assets/plugins/simplelightbox/simple-lightbox.min.js"></script>                                                          
+    <script src="../assets/js/main.js"></script>
+    
+</body>
+</html> 
