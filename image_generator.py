@@ -83,3 +83,79 @@ class Mux(Scene):
             else:
                 self.play(Create(selector[idx]), Write(nums[idx]))
             self.wait()
+
+
+class Demux(Scene):
+    def construct(self):
+        self.camera.background_color = "#353537"
+        demux = VGroup(Tex("DEMUX", color=RED, fill_opacity=0.3).scale(0.85), Rectangle(color=RED).rotate(PI/2))
+        inputs = VGroup()
+        for line in range(8):
+            inputs.add(VGroup(MathTex(f"Z_{line}").scale(0.6).shift(1.35*RIGHT), Line(LEFT, RIGHT)))
+        inputs.arrange_submobjects(DOWN, buff=0.25).next_to(demux, RIGHT).shift(0.23*LEFT)
+        output = VGroup(MathTex(f"X").scale(0.6).shift(3.3*LEFT),Line(LEFT, RIGHT).next_to(demux, LEFT).shift(0.225*RIGHT))
+        demux.z_index = 100
+        sel = VGroup(Line(demux.get_bottom(), demux.get_bottom()+0.75*DOWN), Line(demux.get_bottom()+0.75*DOWN, demux.get_bottom()+0.75*DOWN+1.75*LEFT), MathTex("S").next_to(Line(demux.get_bottom()+0.75*DOWN, demux.get_bottom()+0.75*DOWN+1.75*LEFT), LEFT).shift(0.2*RIGHT).scale(0.6))
+        self.add(demux, inputs, output, sel)
+        
+        selector = []
+        nums = []
+        for idx, line in enumerate(inputs):
+            selector.append(Line(output[1].get_right(), inputs[idx][1].get_left(), color=RED))
+            if idx < 2:
+                nums.append(MathTex("00"+bin(idx)[2:] ).next_to(sel[0], RIGHT).scale(0.7).shift(0.2*LEFT))
+            elif idx < 4:
+                nums.append(MathTex("0"+bin(idx)[2:] ).next_to(sel[0], RIGHT).scale(0.7).shift(0.2*LEFT))
+            else:
+                nums.append(MathTex(bin(idx)[2:] ).next_to(sel[0], RIGHT).scale(0.7).shift(0.2*LEFT))
+            if idx:
+                self.play(ReplacementTransform(selector[idx-1], selector[idx]), ReplacementTransform(nums[idx-1], nums[idx]))
+            else:
+                self.play(Create(selector[idx]), Write(nums[idx]))
+            self.wait()
+
+class Codificador(Scene):
+    def construct(self):
+        self.camera.background_color = "#353537"
+        codificador = VGroup(Tex("CODIFICADOR", color=RED, fill_opacity=0.3).scale(0.5), Rectangle(color=RED).rotate(PI/2))
+        inputs = VGroup()
+        for line in range(8):
+            inputs.add(Line(LEFT, RIGHT))
+        inputs.arrange_submobjects(DOWN, buff=0.5).next_to(codificador, LEFT).shift(0.25*RIGHT)
+        outputs = VGroup()
+        for line in range(3):
+            outputs.add(Line(LEFT, RIGHT))
+        outputs.arrange_submobjects(DOWN, buff=0.5).next_to(codificador, RIGHT).shift(0.25*LEFT)
+        codificador.z_index = 100
+        self.add(codificador, inputs, outputs)
+    
+        ins = []
+        outs = []
+        for idx, line in enumerate(inputs):
+            if idx < 2:
+                outs.append(MathTex("00"+bin(idx)[2:] ).next_to(outputs[0], RIGHT).scale(0.9).shift(0.2*LEFT))
+            elif idx < 4:
+                outs.append(MathTex("0"+bin(idx)[2:] ).next_to(outputs[0], RIGHT).scale(0.9).shift(0.2*LEFT))
+            else:
+                outs.append(MathTex(bin(idx)[2:] ).next_to(outputs[0], RIGHT).scale(0.9).shift(0.2*LEFT))
+
+            outs[idx][0][0].next_to(outputs[0], RIGHT).scale(0.7).shift(0.2*LEFT)
+            outs[idx][0][1].next_to(outputs[1], RIGHT).scale(0.7).shift(0.2*LEFT)
+            outs[idx][0][2].next_to(outputs[2], RIGHT).scale(0.7).shift(0.2*LEFT)
+
+            ins.append(MathTex("0","0","0","0","0","0","0","0"))
+            string = ""
+            for i in range(8):
+                if i == idx:
+                    string+="1"
+                else:
+                    string+="0"
+            onehot = VGroup()
+            for letter in string:
+                onehot.add(MathTex(letter).scale(0.9))
+            ins[idx] = onehot.arrange_submobjects(UP, buff=0.4).next_to(inputs, LEFT).scale(0.7).shift(0.15*RIGHT)
+            if idx:
+                self.play(ReplacementTransform(outs[idx-1], outs[idx]), ReplacementTransform(ins[idx-1], ins[idx]))
+            else:
+                self.play(Write(outs[idx][0]), Write(ins[idx]))
+            self.wait()
