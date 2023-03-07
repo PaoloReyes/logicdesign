@@ -126,6 +126,7 @@ SUBDESIGN ALU(
 VARIABLE
     u1 : lpm_divide WITH (LPM_WIDTHN = 4, LPM_WIDTHD = 4, LPM_NREPRESENTATION = "SIGNED", LPM_DREPRESENTATION = "SIGNED");
     quo[3..0] : NODE;
+
 BEGIN
     u1.numer[] = a[];
     u1.denom[] = b[];
@@ -229,6 +230,7 @@ always @(a, b, sel)
         12 : z = {7'b0000000, {{{a[0]|b[0]}|{a[1]|b[1]}}|{{a[2]|b[2]}|{a[3]|b[3]}}}};
         13 : z = {7'b0000000, ~{{{a[0]&b[0]}&{a[1]&b[1]}}&{{a[2]&b[2]}&{a[3]&b[3]}}}};
         14 : z = {7'b0000000, ~{{{a[0]|b[0]}|{a[1]|b[1]}}|{{a[2]|b[2]}|{a[3]|b[3]}}}};
+        default : z = 8'bXXXXXXXX;
     endcase
 endmodule</code></pre>
                                     </div><!--//code-block-->
