@@ -205,3 +205,106 @@ class Decodificador(Scene):
             else:
                 self.play(Write(outs[idx][0]), Write(ins[idx]))
             self.wait()
+
+class Comparador(Scene):
+    def construct(self):
+        self.camera.background_color = "#353537"
+        comparador = VGroup(Tex("COMPARADOR", color=RED, fill_opacity=0.3).scale(0.45), Rectangle(color=RED).rotate(PI/2))
+        inputs1 = VGroup()
+        for line in range(4):
+            inputs1.add(Line(LEFT, RIGHT))
+        inputs2 = VGroup()
+        for line in range(4):
+            inputs2.add(Line(LEFT, RIGHT))
+        inputs1.arrange_submobjects(DOWN, buff=0.5).next_to(comparador, LEFT).shift(0.25*RIGHT).shift(UP)
+        inputs2.arrange_submobjects(DOWN, buff=0.5).next_to(comparador, LEFT).shift(0.25*RIGHT).shift(DOWN)
+        outputs = VGroup()
+        for line in range(3):
+            outputs.add(Line(LEFT, RIGHT))
+        outputs.arrange_submobjects(DOWN, buff=0.5).next_to(comparador, RIGHT).shift(0.25*LEFT)
+        comparador.z_index = 100
+        self.add(comparador, inputs1, inputs2, outputs)
+    
+        ins = []
+        ins2 = []
+        outs = []
+        i = 0
+        j = 0
+        i_txt = []
+        j_txt = []
+        for idx in range(16):
+            print(i,j)
+            if i < 2:
+                ins.append(MathTex("000"+bin(i)[2:], color=GREEN).next_to(inputs1[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            elif i < 4:
+                ins.append(MathTex("00"+bin(i)[2:], color=GREEN).next_to(inputs1[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            elif i < 8:
+                ins.append(MathTex("0"+bin(i)[2:], color=GREEN).next_to(inputs1[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            else:
+                ins.append(MathTex(bin(i)[2:], color=GREEN).next_to(inputs1[0], LEFT).scale(0.9).shift(0.2*LEFT))
+
+            if j < 2:
+                ins2.append(MathTex("000"+bin(j)[2:], color=BLUE).next_to(inputs2[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            elif j < 4:
+                ins2.append(MathTex("00"+bin(j)[2:], color=BLUE).next_to(inputs2[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            elif j < 8:
+                ins2.append(MathTex("0"+bin(j)[2:], color=BLUE).next_to(inputs2[0], LEFT).scale(0.9).shift(0.2*LEFT))
+            else:
+                ins2.append(MathTex(bin(j)[2:], color=BLUE).next_to(inputs2[0], LEFT).scale(0.9).shift(0.2*LEFT))
+
+            ins[idx][0][0].next_to(inputs1[0], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins[idx][0][1].next_to(inputs1[1], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins[idx][0][2].next_to(inputs1[2], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins[idx][0][3].next_to(inputs1[3], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins2[idx][0][0].next_to(inputs2[0], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins2[idx][0][1].next_to(inputs2[1], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins2[idx][0][2].next_to(inputs2[2], LEFT).scale(0.7).shift(-0.1*LEFT)
+            ins2[idx][0][3].next_to(inputs2[3], LEFT).scale(0.7).shift(-0.1*LEFT)
+
+            if i == j:
+                outs.append(MathTex("010"))
+                outs[idx][0][1].set_color(YELLOW)
+            elif i < j:
+                outs.append(MathTex("001"))
+                outs[idx][0][2].set_color(YELLOW)
+            else:
+                outs.append(MathTex("100"))
+                outs[idx][0][0].set_color(YELLOW)
+            
+            outs[idx][0][0].next_to(outputs[0], RIGHT).scale(0.7).shift(0.1*RIGHT)
+            outs[idx][0][1].next_to(outputs[1], RIGHT).scale(0.7).shift(0.1*RIGHT)
+            outs[idx][0][2].next_to(outputs[2], RIGHT).scale(0.7).shift(0.1*RIGHT)
+
+            i_txt.append(MathTex(i, color=GREEN).next_to(inputs1, LEFT).shift(0.6*LEFT))
+            j_txt.append(MathTex(j, color=BLUE).next_to(inputs2, LEFT).shift(0.6*LEFT))
+
+            if idx:
+                self.play(ReplacementTransform(ins[idx-1], ins[idx]), ReplacementTransform(ins2[idx-1], ins2[idx]), ReplacementTransform(i_txt[idx-1], i_txt[idx]), ReplacementTransform(j_txt[idx-1], j_txt[idx]), ReplacementTransform(outs[idx-1], outs[idx]))
+            else:
+                self.play(Write(ins[idx]), Write(ins2[idx]), Write(i_txt[idx]), Write(j_txt[idx]), Write(outs[idx]))
+            self.wait()
+
+            if idx == 5:
+                i+=1
+                j=j
+            elif idx == 9 or j == 10 or j == 11:
+                i=i
+                j+=1
+            else:
+                j+=1
+                i+=1
+
+class ALU(Scene):
+    def construct(self):
+        alu = Polygon([-3, 1.5, 0], [-1, -1.5, 0], [1, -1.5, 0], [3, 1.5, 0], [1, 1.5, 0], [0.5, 0.5, 0], [-0.5, 0.5, 0], [-1, 1.5, 0], [-3, 1.5, 0], fill_opacity=0.6, color=BLUE)
+        a = VGroup(*[Line(0.7*UP, 0.5*DOWN) for i in range(4)]).arrange_submobjects(RIGHT, buff=0.45).next_to(alu, UP).shift(2*LEFT+0.25*DOWN)
+        b = a.copy().shift(4*RIGHT)
+        c = VGroup(*[Line(0.7*UP, 0.5*DOWN) for i in range(8)]).arrange_submobjects(RIGHT, buff=0.25).next_to(alu, DOWN).shift(0.25*UP)
+        t1 = Tex("A").next_to(a, UP)
+        t2 = Tex("B").next_to(b, UP)
+        t3 = Tex("C").next_to(c, DOWN)
+        sel = VGroup(*[Line(alu.get_left()+RIGHT, alu.get_left()+LEFT) for i in range(4)]).arrange_submobjects(UP).shift(2.6*LEFT)
+        t4 = Tex("Sel").next_to(sel, LEFT)
+        alu2 = Polygon([-3, 1.5, 0], [-1, -1.5, 0], [1, -1.5, 0], [3, 1.5, 0], [1, 1.5, 0], [0.5, 0.5, 0], [-0.5, 0.5, 0], [-1, 1.5, 0], [-3, 1.5, 0], fill_opacity=1, color=BLACK)
+        alu.z_index = 100
+        self.add(alu, a, b, c, t1, t2, t3, t4, sel, alu2)
